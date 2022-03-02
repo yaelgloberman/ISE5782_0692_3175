@@ -22,16 +22,6 @@ public class Ray {
         return new Vector(_dir._xyz);
     }
 
-    //public Point getPoint(double delta ){
-      //  if (isZero(delta)){
-        //    return _p0;
-        //}
-        //return _p0.add(_dir.scale(delta));
-    //}
-
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
