@@ -6,7 +6,7 @@ public class Point {
      final Double3 _xyz;
 
     /**
-     * constructor that initilize the xyz- get it ready
+     * constructor that initialize the xyz- get it ready
      * @param xyz
      */
     public Point(Double3 xyz) {
@@ -14,10 +14,10 @@ public class Point {
     }
 
     /**
-     * constructor that get 3 doubles and initilize new Double3
-     * @param x
-     * @param y
-     * @param z
+     * constructor that get 3 doubles and initialize new Double3
+     * @param x value of X axis
+     * @param y value of y axis
+     * @param z value of z axis
      */
     public Point(double x, double y, double z) {
         _xyz=new Double3(x,y,z);
@@ -58,7 +58,7 @@ public class Point {
     }
 
     /**
-     * @param other
+     * @param other point
      * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2
      */
     public double distanceSquared(Point other) {
@@ -74,7 +74,7 @@ public class Point {
     }
 
     /**
-     * @param other
+     * @param other point
      * @return euclidean distance between 2  3D points using the Pythagorean theorem
      */
     public double distance(Point other) {
