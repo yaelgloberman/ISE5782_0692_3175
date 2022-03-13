@@ -1,3 +1,5 @@
+//Name: Ruchama Simons Id: 324280692 Mail: ruchama.simons@gmail.com
+//Name: Yael Globerman Id: 324023175 Mail: ygloberm@g.jct.ac.il
 import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
