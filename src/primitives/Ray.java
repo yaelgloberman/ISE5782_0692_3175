@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 public class Ray {
     final private Point _p0;
     final private Vector _dir;
@@ -29,6 +31,18 @@ public class Ray {
         if(!(o instanceof Ray)) return false;
         Ray ray = (Ray) o;
         return _p0.equals(ray._p0) && _dir.equals(ray._dir);
+    }
+
+    /**
+     *
+     * @param t-scale
+     * @return p=p0+t*v
+     */
+    public Point getPoint(double t){
+        if (isZero(t)){
+            return  _p0;
+        }
+        return _p0.add(_dir.scale(t));
     }
 
     @Override

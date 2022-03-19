@@ -81,4 +81,28 @@ public class Point {
         return Math.sqrt(distanceSquared(other));
     }
 
+    /**
+     *
+     * @return the value of x axis
+     */
+    public double getX() {
+        return _xyz._d1;
+    }
+
+    /**
+     *
+     * @return the value of y axis
+     */
+    public double getY() {
+        return _xyz._d2;
+    }
+
+    /**
+     *
+     * @return the value of x axis
+     */
+    public double getZ() {
+        return _xyz._d3;
+    }
+
 }
