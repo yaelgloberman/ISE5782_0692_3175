@@ -93,8 +93,6 @@ public class Plane implements Geometry {
         Point p0=ray.getP0();
         Vector v=ray.getDirection();
         Vector n=_normal;
-
-
         double nv=n.dotProduct(v);
         if(isZero(nv)){
             return null;
