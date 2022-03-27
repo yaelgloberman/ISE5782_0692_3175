@@ -89,9 +89,14 @@ public class Polygon implements Geometry {
 		return plane.getNormal();
 	}
 
+	/**
+	 * the func find the intersections of the ray with the polygon
+	 * @param ray ray pointing towards the graphic object
+	 * @return list of intersection points
+	 */
 	@Override
 	public List<Point> findIntersections(Ray ray) {
-		List<Point> result = _plane.findIntersections(ray);
+		List<Point> result = plane.findIntersections(ray);
 
 		if (result == null) {
 			return result;
@@ -100,8 +105,8 @@ public class Polygon implements Geometry {
 		Point P0 = ray.getP0();
 		Vector v = ray.getDirection();
 
-		Point P1 = _vertices.get(1);
-		Point P2 = _vertices.get(0);
+		Point P1 = vertices.get(1);
+		Point P2 = vertices.get(0);
 
 		Vector v1 = P1.subtract(P0);
 		Vector v2 = P2.subtract(P0);
@@ -115,9 +120,9 @@ public class Polygon implements Geometry {
 		boolean positive = sign > 0;
 
 		//iterate through all vertices of the polygon
-		for (int i = _vertices.size() - 1; i > 0; --i) {
+		for (int i = vertices.size() - 1; i > 0; --i) {
 			v1 = v2;
-			v2 = _vertices.get(i).subtract(P0);
+			v2 = vertices.get(i).subtract(P0);
 
 			sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
 			if (isZero(sign)) {
@@ -131,5 +136,4 @@ public class Polygon implements Geometry {
 
 		return result;
 	}
-
 }

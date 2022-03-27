@@ -17,7 +17,11 @@ public class Triangle extends Polygon {
 
         super(p1,p2,p3);
     }
-
+    /**
+     * the func find the intersections of the ray with the triangle
+     * @param ray ray pointing towards the graphic object
+     * @return list of intersection points
+     */
     @Override
    public List<Point> findIntersections(Ray ray){
         //TODO
@@ -32,9 +36,9 @@ public class Triangle extends Polygon {
         Point p2=vertices.get(1);
         Point p3=vertices.get(2);
 
-        Vector v1= p1.subtract(p0); //(p0=>p1)
-        Vector v2= p2.subtract(p0); //(p0=>p2)
-        Vector v3= p3.subtract(p0); //(p0=>p3)
+        Vector v1= p0.subtract(p1); //(p0=>p1)
+        Vector v2= p0.subtract(p2); //(p0=>p2)
+        Vector v3= p0.subtract(p3); //(p0=>p3)
 
         Vector n1=v1.crossProduct(v2);
         Vector n2=v2.crossProduct(v3);

@@ -88,24 +88,47 @@ public class Plane implements Geometry {
         return getNormal();
     }
 
+    /**
+     * the func find the intersections of the ray with the plane
+     * @param ray ray pointing towards the graphic object
+     * @return list of intersection points
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Point p0=ray.getP0();
-        Vector v=ray.getDirection();
-        Vector n=_normal;
-        double nv=n.dotProduct(v);
+        Point P0 = ray.getP0();
+        Vector v = ray.getDirection();
+
+        Vector n = _normal;
+
+        if(_q0.equals(P0)){
+            return  null;
+        }
+
+        Vector P0_Q0 = _q0.subtract(P0);
+
+        //numerator
+        double nP0Q0  = alignZero(n.dotProduct(P0_Q0));
+
+        //
+        if (isZero(nP0Q0 )){
+            return null;
+        }
+
+        //denominator
+        double nv = alignZero(n.dotProduct(v));
+
+        // ray is lying in the plane axis
         if(isZero(nv)){
             return null;
         }
-        Vector P0_Q=p0.subtract(_q0);
 
-        double t=alignZero( n.dotProduct(P0_Q)/nv);
-        //if t<0 the ray point to the opposite direction
-        //if t==0 the ray origin lay with the plane
-        if(t>0){
-            Point p=p0.add(v.scale(t));
-            return List.of(p);
+        double  t = alignZero(nP0Q0  / nv);
+
+        if (t <=0){
+            return  null;
         }
-        return null;
+        Point point =ray.getPoint(t);
+
+        return List.of(point);
     }
 }

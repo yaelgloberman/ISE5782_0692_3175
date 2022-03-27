@@ -3,6 +3,8 @@ package geometries;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -89,4 +91,6 @@ class PolygonTest {
         double sqrt3 = Math.sqrt(1d / 3);
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)), "Bad normal to trinagle");
     }
+
+
 }
