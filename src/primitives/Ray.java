@@ -7,7 +7,7 @@ public class Ray {
     final private Vector _dir;
 
     /**
-     * constructor to initilize the point and the direction vector-normalized
+     * constructor to initialize the point and the direction vector-normalized
      * @param p0 the point
      * @param dir the vector
      */

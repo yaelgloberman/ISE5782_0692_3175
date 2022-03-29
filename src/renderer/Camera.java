@@ -10,7 +10,7 @@ import static primitives.Util.isZero;
 public class Camera {
 
 
-    private  Vector vRight;      //vector pointing towards the right: x axis
+    private  Vector vRight;      //vector pointing towards the right: x-axis
     private  Point p0;           //camera eye
     private  Vector vTo;         //vector pointing towards the scene
     private  Vector vUp;         //vector pointing upwards the scene
@@ -22,8 +22,8 @@ public class Camera {
     /**
      *
      * @param p0 origin point in 3D space
-     * @param vUp vector
-     * @param vTo
+     * @param vUp vector go upwards
+     * @param vTo vector vTo
      */
     public Camera(Point p0, Vector vTo, Vector vUp) {
         if (! isZero(vUp.dotProduct(vTo))){

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Triangle extends Polygon {
     /**
-     * constructor that initilize the triangle
+     * constructor that initialize the triangle
      * @param p1 the first point
      * @param p2 the second point
      * @param p3 the third point

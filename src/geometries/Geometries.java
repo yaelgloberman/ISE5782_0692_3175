@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class Geometries implements Intersectable{
     List<Intersectable> _intersectableList;
-
     /**
      * constructor
      */
@@ -31,7 +30,7 @@ public class Geometries implements Intersectable{
 
     /**
      * add new intersectable point to the list
-     * @param intersectables
+     * @param intersectablesntersectables
      */
     public void add(Intersectable...intersectables){
         Collections.addAll(_intersectableList,intersectables);

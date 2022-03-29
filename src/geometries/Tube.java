@@ -15,12 +15,13 @@ import static primitives.Util.isZero;
 public class Tube implements Geometry {
     final Ray _axisRay;
     final double _radius;
+    private Ray _axis;
 
     /**
      * constructor to the Tube
      *
-     * @param _axisRay
-     * @param _radius
+     * @param _axisRay axis ray
+     * @param _radius radius
      */
     public Tube(Ray _axisRay, double _radius) {
         this._axisRay = _axisRay;

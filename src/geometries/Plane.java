@@ -18,23 +18,16 @@ public class Plane implements Geometry {
      * the points are ordered from right to left
      * forming an arc in right direction
      *
-     * @param p1
-     * @param p2
-     * @param p3
+     * @param p1 point p1
+     * @param p2 point p2
+     * @param p3 point p3
      */
     public Plane(Point p1, Point p2, Point p3) {
         _q0 = p1;
-        //TODO check direction of vectors
-//        Vector U = p1.subtract(p2);
-//        Vector V = p3.subtract(p2);
-
         Vector U = p2.subtract(p1);
         Vector V = p3.subtract(p1);
-
         Vector N = U.crossProduct(V);
-
-
-        //right hand rule
+        //right-hand rule
         _normal = N.normalize();
 
     }
@@ -42,7 +35,7 @@ public class Plane implements Geometry {
     /**
      * constructor of plane from a point and normal
      *
-     * @param p0
+     * @param p0 point op0 the middle of the camera
      * @param normal vector for the normal (will bwe normalized automatically)
      */
     public Plane(Point p0, Vector normal) {
@@ -63,7 +56,7 @@ public class Plane implements Geometry {
     /**
      * getter for _q0
      *
-     * @return referenced point of the palne
+     * @return referenced point of the plane
      */
     public Point get_q0() {
         return _q0;

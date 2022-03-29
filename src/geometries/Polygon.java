@@ -97,7 +97,6 @@ public class Polygon implements Geometry {
 	@Override
 	public List<Point> findIntersections(Ray ray) {
 		List<Point> result = plane.findIntersections(ray);
-
 		if (result == null) {
 			return result;
 		}

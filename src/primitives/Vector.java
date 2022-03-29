@@ -7,7 +7,7 @@ public class Vector extends Point {
     /**
      * first constructor - get the xyz
      *
-     * @param xyz
+     * @param xyz double3 xyz
      */
     public Vector(Double3 xyz) {
         super(xyz);
@@ -54,7 +54,7 @@ public class Vector extends Point {
      * dot product between two vectors (scalar product)
      *
      * @param other the right vector of U.V
-     * @return scalre value of dot product
+     * @return scalar value of dot product
      * @link https://en.wikipedia.org/wiki/Dot_product
      */
     public double dotProduct(Vector other) {
@@ -81,7 +81,7 @@ public class Vector extends Point {
      * creating a new Vector corresponding to the actual one
      * scaled by scaling factor
      *
-     * @param scalar scaling factot
+     * @param scalar scaling factor
      */
     public Vector scale(double scalar) {
         if (Util.isZero(scalar)) {
