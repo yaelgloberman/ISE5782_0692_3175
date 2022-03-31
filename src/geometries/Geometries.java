@@ -30,7 +30,7 @@ public class Geometries implements Intersectable{
 
     /**
      * add new intersectable point to the list
-     * @param intersectablesntersectables
+     * @param intersectables  number of Geometric objects that implement {@link Intersectable}
      */
     public void add(Intersectable...intersectables){
         Collections.addAll(_intersectableList,intersectables);

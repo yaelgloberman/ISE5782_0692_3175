@@ -7,21 +7,24 @@ import primitives.Vector;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
+/**
+ *  Finite Cylinder in 3D space
+ */
 public class Cylinder extends Tube{
     final private double _height;
 
     /**
      * constructor that uses the constructor of the Tube
-     * @param _axisRay  axis ray
-     * @param _radius   radius
-     * @param _height   height
+     * @param axisRay  axis ray
+     * @param radius   radius
+     * @param height   height
      */
-    public Cylinder(Ray _axisRay, double _radius, double _height) {
-        super(_axisRay, _radius);
-        this._height = _height;
+    public Cylinder(Ray axisRay, double radius, double height) {
+        super(axisRay, radius);
+        this._height = height;
     }
 
-    public double get_height() {
+    public double getHeight() {
         return _height;
     }
 

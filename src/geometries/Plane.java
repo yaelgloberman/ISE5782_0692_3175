@@ -97,16 +97,6 @@ public class Plane implements Geometry {
             return  null;
         }
 
-        Vector P0_Q0 = _q0.subtract(P0);
-
-        //numerator
-        double nP0Q0  = alignZero(n.dotProduct(P0_Q0));
-
-        //
-        if (isZero(nP0Q0 )){
-            return null;
-        }
-
         //denominator
         double nv = alignZero(n.dotProduct(v));
 
@@ -115,9 +105,21 @@ public class Plane implements Geometry {
             return null;
         }
 
+        Vector P0_Q0 = _q0.subtract(P0);
+
+        //numerator
+        double nP0Q0  = alignZero(n.dotProduct(P0_Q0));
+
+        // ray parallel to plane
+        if (isZero(nP0Q0 )){
+            return null;
+        }
+
+
         double  t = alignZero(nP0Q0  / nv);
 
-        if (t <=0){
+        //ray is opposite to the direction
+        if (t <0){
             return  null;
         }
         Point point =ray.getPoint(t);

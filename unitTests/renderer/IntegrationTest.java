@@ -108,6 +108,5 @@ public class IntegrationTest {
         // TC02: Medium triangle 2 points
         assertCountIntersections(cam, new Triangle(new Point(1, 1, -2), new Point(-1, 1, -2), new Point(0, -20, -2)), 2);
     }
-
-
+    
 }

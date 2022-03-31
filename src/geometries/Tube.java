@@ -28,13 +28,15 @@ public class Tube implements Geometry {
         this._radius = _radius;
     }
 
-    public Ray get_axisRay() {
+    public Ray getAxisRay() {
         return _axisRay;
     }
 
-    public double get_radius() {
+    public double getRadius() {
         return _radius;
     }
+
+
 
     @Override
     public String toString() {

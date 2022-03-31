@@ -55,8 +55,8 @@ public class Vector extends Point {
      *
      * @param other the right vector of U.V
      * @return scalar value of dot product
-     * @link https://en.wikipedia.org/wiki/Dot_product
-     */
+     * @see <a href="https://en.wikipedia.org/wiki/Dot_product"></a>
+      */
     public double dotProduct(Vector other) {
         Double3 temp= this._xyz.product(other._xyz);
         return temp._d1+temp._d2+temp._d3;
@@ -77,11 +77,14 @@ public class Vector extends Point {
             throw new ArithmeticException("divide by Zero");
         return new Vector(new Double3(this._xyz._d1/length,this._xyz._d2/length,this._xyz._d3/length));
     }
+
     /**
-     * creating a new Vector corresponding to the actual one
-     * scaled by scaling factor
      *
-     * @param scalar scaling factor
+     * creating a new Vector corresponding to the actual one
+     *  scaled by scaling factor
+     *
+     * @param scalar scalar factor
+     * @return extended vector
      */
     public Vector scale(double scalar) {
         if (Util.isZero(scalar)) {
@@ -101,7 +104,7 @@ public class Vector extends Point {
      *
      * @param other second vector
      * @return new Vector resulting from cross product
-     * @link https://en.wikipedia.org/wiki/Cross_product
+     * @see <a href="https://en.wikipedia.org/wiki/Cross_product"></a>
      */
     public Vector crossProduct(Vector other) {
         double u1 = _xyz._d1;
