@@ -1,16 +1,16 @@
 package primitives;
 
-import java.util.Objects;
-
 public class Point {
-     final Double3 _xyz;
+    public static final Point ZERO = new Point(0d,0d,0d);
+
+    final Double3 xyz;
 
     /**
      * constructor that initialize the xyz- get it ready
      * @param xyz point xyz
      */
     public Point(Double3 xyz) {
-        _xyz = xyz;
+        this.xyz = xyz;
     }
 
     /**
@@ -20,7 +20,7 @@ public class Point {
      * @param z value of z axis
      */
     public Point(double x, double y, double z) {
-        _xyz=new Double3(x,y,z);
+        xyz =new Double3(x,y,z);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return _xyz.equals( point._xyz);
+        return xyz.equals( point.xyz);
     }
 
     @Override
     public String toString() {
-        return "Point " + _xyz ;
+        return "Point " + xyz;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Point {
         if (pt2.equals(this)) {
             throw new IllegalArgumentException("cannot create Vector to Point(0,0,0)");
         }
-        return new Vector(this._xyz.subtract(pt2._xyz));
+        return new Vector(this.xyz.subtract(pt2.xyz));
     }
 
     /**
@@ -54,7 +54,7 @@ public class Point {
      * @return new point
      */
     public Point add(Vector v) {
-        return new Point(this._xyz.add(v._xyz));
+        return new Point(this.xyz.add(v.xyz));
     }
 
     /**
@@ -62,13 +62,13 @@ public class Point {
      * @return (x2 - x1)^2 + (y2-y1)^2 + (z2-z1)^2
      */
     public double distanceSquared(Point other) {
-        final double x1 = _xyz._d1;
-        final double y1 = _xyz._d2;
-        final double z1 = _xyz._d3;
+        final double x1 = xyz.d1;
+        final double y1 = xyz.d2;
+        final double z1 = xyz.d3;
 
-        final double x2 = other._xyz._d1;
-        final double y2 = other._xyz._d2;
-        final double z2 = other._xyz._d3;
+        final double x2 = other.xyz.d1;
+        final double y2 = other.xyz.d2;
+        final double z2 = other.xyz.d3;
 
         return ((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1));
     }
@@ -86,7 +86,7 @@ public class Point {
      * @return the value of x-axis
      */
     public double getX() {
-        return _xyz._d1;
+        return xyz.d1;
     }
 
     /**
@@ -94,7 +94,7 @@ public class Point {
      * @return the value of y-axis
      */
     public double getY() {
-        return _xyz._d2;
+        return xyz.d2;
     }
 
     /**
@@ -102,7 +102,7 @@ public class Point {
      * @return the value of x-axis
      */
     public double getZ() {
-        return _xyz._d3;
+        return xyz.d3;
     }
 
 }

@@ -11,7 +11,7 @@ public class Vector extends Point {
      */
     public Vector(Double3 xyz) {
         super(xyz);
-        if (_xyz.equals(Double3.ZERO)) {
+        if (this.xyz.equals(Double3.ZERO)) {
             throw new IllegalArgumentException("Vector(0,0,0) is not valid in this project");
         }
     }
@@ -29,16 +29,16 @@ public class Vector extends Point {
 
     @Override
     public String toString() {
-        return "Vector " + _xyz;
+        return "Vector " + xyz;
     }
 
     /**
      * @return euclidean length squared of the vector
      */
     public double lengthSquared() {
-        double u1 = _xyz._d1;
-        double u2 = _xyz._d2;
-        double u3 = _xyz._d3;
+        double u1 = xyz.d1;
+        double u2 = xyz.d2;
+        double u3 = xyz.d3;
 
         return u1 * u1 + u2 * u2 + u3 * u3;
     }
@@ -58,8 +58,8 @@ public class Vector extends Point {
      * @see <a href="https://en.wikipedia.org/wiki/Dot_product"></a>
       */
     public double dotProduct(Vector other) {
-        Double3 temp= this._xyz.product(other._xyz);
-        return temp._d1+temp._d2+temp._d3;
+        Double3 temp= this.xyz.product(other.xyz);
+        return temp.d1 +temp.d2 +temp.d3;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Vector extends Point {
 //        //cannot divide by 0
         if (length == 0)
             throw new ArithmeticException("divide by Zero");
-        return new Vector(new Double3(this._xyz._d1/length,this._xyz._d2/length,this._xyz._d3/length));
+        return new Vector(new Double3(this.xyz.d1 /length,this.xyz.d2 /length,this.xyz.d3 /length));
     }
 
     /**
@@ -90,14 +90,14 @@ public class Vector extends Point {
         if (Util.isZero(scalar)) {
             throw new IllegalArgumentException("scaling factor == 0");
         }
-        return new Vector(this._xyz.scale(scalar));
+        return new Vector(this.xyz.scale(scalar));
     }
     /**
      * @param other Vector
      * @return new Vector (u+v)
      */
     public Vector add(Vector other) {
-        return new Vector(this._xyz.add(other._xyz));
+        return new Vector(this.xyz.add(other.xyz));
     }
     /**
      * Cross product (vectorial product)
@@ -107,12 +107,12 @@ public class Vector extends Point {
      * @see <a href="https://en.wikipedia.org/wiki/Cross_product"></a>
      */
     public Vector crossProduct(Vector other) {
-        double u1 = _xyz._d1;
-        double u2 = _xyz._d2;
-        double u3 = _xyz._d3;
-        double v1 = other._xyz._d1;
-        double v2 = other._xyz._d2;
-        double v3 = other._xyz._d3;
+        double u1 = xyz.d1;
+        double u2 = xyz.d2;
+        double u3 = xyz.d3;
+        double v1 = other.xyz.d1;
+        double v2 = other.xyz.d2;
+        double v3 = other.xyz.d3;
 
         return new Vector(new Double3(
                 u2 * v3 - u3 * v2,
