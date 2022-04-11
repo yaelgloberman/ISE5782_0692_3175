@@ -37,7 +37,6 @@ public class Camera {
         //normalizing the positional vectors
         this.vTo = vTo.normalize();
         this.vUp = vUp.normalize();
-
         this.vRight = this.vTo.crossProduct(this.vUp);
     }
 
@@ -137,7 +136,7 @@ public class Camera {
      * @param color which we want it to color
      */
     public void printGrid(int interval, Color color) {
-        for (int j = 0; j < imageWriter.getNx(); j++) {
+        for (int j = 0; j < imageWriter.getNy(); j++) {
             for (int i = 0; i < imageWriter.getNy(); i++) {
                 //grid 16 X 10
                 if (j % interval == 0 || i % interval == 0) {
