@@ -9,7 +9,7 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     final private Point _q0;
     final private Vector _normal;
 
@@ -87,43 +87,41 @@ public class Plane implements Geometry {
      * @return list of intersection points
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point P0 = ray.getP0();
         Vector v = ray.getDirection();
-
         Vector n = _normal;
 
-        if(_q0.equals(P0)){
-            return  null;
+        if (_q0.equals(P0)) {
+            return null;
         }
 
         //denominator
         double nv = alignZero(n.dotProduct(v));
 
         // ray is lying in the plane axis
-        if(isZero(nv)){
+        if (isZero(nv)) {
             return null;
         }
 
         Vector P0_Q0 = _q0.subtract(P0);
 
         //numerator
-        double nP0Q0  = alignZero(n.dotProduct(P0_Q0));
+        double nP0Q0 = alignZero(n.dotProduct(P0_Q0));
 
         // ray parallel to plane
-        if (isZero(nP0Q0 )){
+        if (isZero(nP0Q0)) {
             return null;
         }
 
 
-        double  t = alignZero(nP0Q0  / nv);
+        double t = alignZero(nP0Q0 / nv);
 
         //ray is opposite to the direction
-        if (t <0){
-            return  null;
+        if (t < 0) {
+            return null;
         }
-        Point point =ray.getPoint(t);
-
-        return List.of(point);
+        GeoPoint geopoint =new GeoPoint(this,ray.getPoint(t));
+        return List.of(geopoint);
     }
 }

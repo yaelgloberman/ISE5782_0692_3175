@@ -12,7 +12,7 @@ import static primitives.Util.isZero;
 /**
  * the class tube implements Geometry
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
     final Ray _axisRay;
     final double _radius;
     private Ray _axis;
@@ -77,7 +77,7 @@ public class Tube implements Geometry {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Vector vAxis = _axis.getDirection();
         Vector v = ray.getDirection();
         Point p0 = ray.getP0();
@@ -108,10 +108,10 @@ public class Tube implements Geometry {
             deltaP = p0.subtract(_axis.getP0());
         } catch (IllegalArgumentException e1) { // the ray begins at axis P0
             if (vVa == 0) // the ray is orthogonal to Axis
-                return List.of(ray.getPoint(_radius));
+                return List.of(new GeoPoint(this,ray.getPoint(_radius)));
 
             double t = alignZero(Math.sqrt(_radius * _radius / vMinusVVaVa.lengthSquared()));
-            return t == 0 ? null : List.of(ray.getPoint(t));
+            return t == 0 ? null : List.of(new GeoPoint(this,ray.getPoint(t)));
         }
 
         double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
@@ -125,7 +125,7 @@ public class Tube implements Geometry {
                 dPMinusdPVaVa = deltaP.subtract(dPVaVa);
             } catch (IllegalArgumentException e1) {
                 double t = alignZero(Math.sqrt(_radius * _radius / a));
-                return t == 0 ? null : List.of(ray.getPoint(t));
+                return t == 0 ? null : List.of(new GeoPoint(this,ray.getPoint(t)));
             }
         }
 
@@ -150,10 +150,12 @@ public class Tube implements Geometry {
 
         // if both t1 and t2 are positive
         if (t2 > 0)
-            return List.of(ray.getPoint(t1), ray.getPoint(t2));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)) ,new GeoPoint(this, ray.getPoint(t2)));
         else // t2 is behind the head
-            return List.of(ray.getPoint(t1));
+            return List.of(new GeoPoint (this,ray.getPoint(t1)));
 
 //        return null;
     }
+
+
 }
