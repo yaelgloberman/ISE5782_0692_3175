@@ -1,17 +1,16 @@
-package elements;
+package lighting;
 
+import lighting.Light;
 import primitives.Color;
 import primitives.Double3;
-
 /**
  * Ambient light for all 3D objects
  * Ambient light represents a fixed-intensity and fixed color light source
  * that affects all the object in the scene equally
  * the ambient light intensity in point is IP=Ka*Ia
  */
-public class AmbientLight {
+public class AmbientLight extends Light {
 
-    private final Color intensity;
 
     /**
      * Constructor
@@ -19,21 +18,15 @@ public class AmbientLight {
      * @param Ka attenuation factor
      */
     public AmbientLight(Color Ia, Double3 Ka){
-        intensity = Ia.scale(Ka);
+      super(Ia.scale(Ka));
     }
 
     /**
-     * default constructor
+     * default constructor returns the color black
      */
     public AmbientLight(){
-        intensity = Color.BLACK;
+        super(Color.BLACK);
     }
 
-    /**
-     * getter for intensity of ambient light
-     * @return intensity
-     */
-    public Color getIntensity() {
-        return intensity;
-    }
+
 }

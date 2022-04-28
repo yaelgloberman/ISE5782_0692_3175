@@ -1,8 +1,12 @@
 package scene;
 
-import elements.AmbientLight;
+import lighting.AmbientLight;
 import geometries.Geometries;
+import lighting.LightSource;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * class scene implements the builder pattern
@@ -13,6 +17,16 @@ public class Scene {
     private final Color background;          //the background color
     private final AmbientLight ambientLight; //the ambient light
     private final Geometries geometries;     //geometries in the scene
+    public List<LightSource> lights= new LinkedList<>();
+
+    public List<LightSource> getLights() {
+        return lights;
+    }
+
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
 
     private Scene(SceneBuilder builder){
         name = builder.name;
