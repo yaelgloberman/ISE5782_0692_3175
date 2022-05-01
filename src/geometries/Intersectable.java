@@ -50,11 +50,11 @@ public abstract class Intersectable {
                 .toList();
     }
 
-    public final List<GeoPoint> findGeoIntersections(Ray ray){
+    public final List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance){
 
-        return findGeoIntersectionsHelper(ray);
+        return findGeoIntersectionsHelper(ray,maxDistance);
     }
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance);
 
 
 }

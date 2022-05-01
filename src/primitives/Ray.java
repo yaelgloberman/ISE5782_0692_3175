@@ -1,8 +1,6 @@
 package primitives;
 
 
-import geometries.Intersectable;
-
 import geometries.Intersectable.GeoPoint;
 import java.util.List;
 
@@ -10,7 +8,11 @@ import static primitives.Util.isZero;
 
 public class Ray {
     final private Point p0;
+    /**
+     * delta value to move the point away from original point
+     */
     final private Vector dir;
+    private static final double DELTA =0.1;
 
     /**
      * constructor to initialize the point and the direction vector-normalized
@@ -21,6 +23,11 @@ public class Ray {
     public Ray(Point p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalize();//Normalizes the direction vector
+    }
+
+    public Ray(Point p0,Vector n,Vector dir){
+        this.p0=p0.add(n.scale(DELTA));
+        this.dir=dir.normalize();
     }
 
     public Point getP0() {

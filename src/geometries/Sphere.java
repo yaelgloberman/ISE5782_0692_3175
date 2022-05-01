@@ -59,11 +59,14 @@ public class Sphere extends Geometry{
      * @return list of intersection points
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         Point P0 = ray.getP0();
         Vector v = ray.getDirection();
 
         if (P0.equals(_center)) {
+            if(alignZero(_radius-maxDistance)>0){
+                return null;
+            }
             return List.of(new GeoPoint(this,_center.add(v.scale(_radius))));
         }
 

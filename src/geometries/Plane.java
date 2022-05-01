@@ -9,7 +9,7 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Plane extends Geometry {
+public class Plane extends Geometry implements FlatGeometry {
     final private Point _q0;
     final private Vector _normal;
 
@@ -87,7 +87,7 @@ public class Plane extends Geometry {
      * @return list of intersection points
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         Point P0 = ray.getP0();
         Vector v = ray.getDirection();
         Vector n = _normal;
@@ -116,6 +116,10 @@ public class Plane extends Geometry {
 
 
         double t = alignZero(nP0Q0 / nv);
+
+        if(alignZero(t-maxDistance)>0){
+            return null;
+        }
 
         //ray is opposite to the direction
         if (t < 0) {

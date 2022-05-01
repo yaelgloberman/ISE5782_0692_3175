@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.FlatGeometry;
 import geometries.Intersectable.GeoPoint;
 import lighting.LightSource;
 import primitives.*;
@@ -14,6 +15,8 @@ import static primitives.Util.alignZero;
  */
 public class RayTracerBasic extends RayTracer {
     private GeoPoint closestPoint;
+    private static final double DELTA =0.1;
+
 private boolean _bb;//bounding box
     /**
      * constructor for ray tracer
@@ -76,10 +79,12 @@ private boolean _bb;//bounding box
             Vector l = lightSource.getL(gp.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color iL = lightSource.getIntensity(gp.point);
-                color = color.add(
-                        iL.scale(calcDiffusive(material, nl)),
-                        iL.scale(calcSpecular(material, n, l, nl, v)));
+                if (unshaded(gp, lightSource,l, n, nl,nv)) {
+                    Color iL = lightSource.getIntensity(gp.point);
+                    color = color.add(
+                            iL.scale(calcDiffusive(material, nl)),
+                            iL.scale(calcSpecular(material, n, l, nl, v)));
+                }
             }
         }
         return color;
@@ -93,5 +98,17 @@ private boolean _bb;//bounding box
         Vector r = l.subtract(n.scale(l.dotProduct(n) * 2)).normalize();
         return material.KS.scale( Math.pow(Math.max(0, r.dotProduct(v.scale(-1d))), material.nShininess));
 
+    }
+
+    private boolean unshaded(GeoPoint gp, LightSource lightsource, Vector l, Vector n, double nl, double nv){
+        Point point=gp.point;
+        Vector lightDirection=l.scale(-1); //from point to light source
+        Vector epsVector=n.scale(nv<0? DELTA:-DELTA);
+        Point pointRay=point.add(epsVector);
+        Ray lightRay=new Ray(pointRay,lightDirection);
+        double maxDistance=lightsource.getDistance(point);
+        List<GeoPoint> intersections =scene.getGeometries().findGeoIntersections(lightRay,maxDistance);
+
+        return intersections==null;
     }
 }

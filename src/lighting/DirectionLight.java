@@ -26,4 +26,9 @@ public class DirectionLight extends Light implements LightSource{
     public Vector getL(Point p) {
         return direction;
     }
+
+    @Override
+    public double getDistance(Point p) {
+        return 0;
+    }
 }
