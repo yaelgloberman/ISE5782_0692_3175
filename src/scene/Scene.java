@@ -51,6 +51,9 @@ public class Scene {
         return geometries;
     }
 
+    public void setAmbientLight(AmbientLight ambientLight) {
+    }
+
     /**
      * the builder class
      */

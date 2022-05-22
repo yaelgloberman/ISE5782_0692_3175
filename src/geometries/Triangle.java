@@ -6,6 +6,8 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 public class Triangle extends Polygon {
     /**
      * constructor that initialize the triangle
@@ -23,7 +25,7 @@ public class Triangle extends Polygon {
      * @return list of intersection points
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<GeoPoint> result=plane.findGeoIntersections(ray);
         if(result==null){
             return null;
@@ -37,6 +39,7 @@ public class Triangle extends Polygon {
         int numOfPositiveNumbers=0;
         for(Vector vector:crossVectors){
             double vn=v.dotProduct(vector);
+
             if(vn==0){
                 return null;
                  }

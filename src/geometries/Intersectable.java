@@ -46,8 +46,12 @@ public abstract class Intersectable {
     public final List<Point> findIntersections(Ray ray){
         List<GeoPoint> geoPointList=findGeoIntersections(ray);
         return geoPointList==null?null
-                :geoPointList.stream().map(geoPoint -> geoPoint.point)
+                :geoPointList.stream().map(gp -> gp.point)
                 .toList();
+    }
+
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
     }
 
     public final List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance){

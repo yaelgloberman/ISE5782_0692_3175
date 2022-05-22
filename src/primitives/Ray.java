@@ -2,8 +2,10 @@ package primitives;
 
 
 import geometries.Intersectable.GeoPoint;
+
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class Ray {
@@ -12,7 +14,7 @@ public class Ray {
      * delta value to move the point away from original point
      */
     final private Vector dir;
-    private static final double DELTA =0.1;
+    private static final double DELTA = 0.1;
 
     /**
      * constructor to initialize the point and the direction vector-normalized
@@ -25,9 +27,15 @@ public class Ray {
         this.dir = dir.normalize();//Normalizes the direction vector
     }
 
-    public Ray(Point p0,Vector n,Vector dir){
-        this.p0=p0.add(n.scale(DELTA));
-        this.dir=dir.normalize();
+    public Ray(Point p0, Vector n, Vector dir) {
+        this.dir = dir.normalize();
+        double nv = alignZero(n.dotProduct(this.dir));
+        if (nv < 0) {
+            this.p0 = p0.add(n.scale(-DELTA));
+        } else {
+            this.p0 = p0.add(n.scale(DELTA));
+        }
+
     }
 
     public Point getP0() {
@@ -67,11 +75,11 @@ public class Ray {
     }
 
 
-   public Point findClosestPoint(List<Point> pointList) {
+    public Point findClosestPoint(List<Point> pointList) {
         double minDistance = Double.MAX_VALUE;
         double pointDistance;
 
-        if(pointList== null){
+        if (pointList == null) {
             return null;
         }
 
@@ -86,11 +94,11 @@ public class Ray {
         return closestPoint;
     }
 
-    public GeoPoint findClosestGeoPoint(List<GeoPoint > pointList) {
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> pointList) {
         double minDistance = Double.MAX_VALUE;
         double geoPointDistance;
 
-        if(pointList== null){
+        if (pointList == null) {
             return null;
         }
 

@@ -117,9 +117,10 @@ public class Plane extends Geometry implements FlatGeometry {
 
         double t = alignZero(nP0Q0 / nv);
 
-        if(alignZero(t-maxDistance)>0){
+        if(alignZero(t-maxDistance)> 0) {
             return null;
         }
+
 
         //ray is opposite to the direction
         if (t < 0) {

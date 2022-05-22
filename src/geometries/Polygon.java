@@ -95,7 +95,7 @@ public class Polygon extends Geometry implements FlatGeometry{
 	 * @return list of intersection points
 	 */
 	@Override
-	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
 		List<GeoPoint> result = plane.findGeoIntersections(ray);
 		if (result == null) {
 			return null;
@@ -111,6 +111,7 @@ public class Polygon extends Geometry implements FlatGeometry{
 		Vector v2 = P2.subtract(P0);
 
 		double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
 
 		if (isZero(sign)) {
 			return null;
@@ -135,4 +136,6 @@ public class Polygon extends Geometry implements FlatGeometry{
 
 		return List.of(new GeoPoint(this,result.get(0).point));
 	}
+
+
 }

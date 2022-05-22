@@ -97,7 +97,7 @@ public class LightsTests {
 	@Test
 	public void trianglesDirectional() {
 		scene2.getGeometries().add(triangle1, triangle2);
-		scene2.getLights().add(new DirectionLight(trCL, trDL));
+		scene2.lights.add(new DirectionLight(trCL, trDL));
 
 		ImageWriter imageWriter = new ImageWriter("lightTrianglesDirectional", 500, 500);
 		camera2.setImageWriter(imageWriter) //
@@ -112,7 +112,7 @@ public class LightsTests {
 	@Test
 	public void trianglesPoint() {
 			scene2.getGeometries().add(triangle1, triangle2);
-			scene2.getLights().add(new PointLight(trCL, trPL).setKL(0.001).setKQ(0.0002));
+			scene2.lights.add(new PointLight(trCL, trPL).setKL(0.001).setKQ(0.0002));
 
 			ImageWriter imageWriter = new ImageWriter("lightTrianglesPoint", 500, 500);
 			camera2.setImageWriter(imageWriter) //

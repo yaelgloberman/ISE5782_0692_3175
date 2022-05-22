@@ -1,5 +1,6 @@
 package lighting;
 
+import org.w3c.dom.DOMImplementation;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
@@ -29,6 +30,6 @@ public class DirectionLight extends Light implements LightSource{
 
     @Override
     public double getDistance(Point p) {
-        return 0;
+        return Double.POSITIVE_INFINITY;
     }
 }
