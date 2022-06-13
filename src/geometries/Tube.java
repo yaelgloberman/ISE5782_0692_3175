@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Double3;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -76,9 +77,10 @@ public class Tube extends Geometry {
         return n;
     }
 
+
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
-        Vector vAxis = _axis.getDirection();
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        Vector vAxis = _axisRay.getDirection();
         Vector v = ray.getDirection();
         Point p0 = ray.getP0();
 
@@ -105,13 +107,13 @@ public class Tube extends Geometry {
 
         Vector deltaP = null;
         try {
-            deltaP = p0.subtract(_axis.getP0());
+            deltaP = p0.subtract(_axisRay.getP0());
         } catch (IllegalArgumentException e1) { // the ray begins at axis P0
             if (vVa == 0) // the ray is orthogonal to Axis
                 return List.of(new GeoPoint(this,ray.getPoint(_radius)));
 
             double t = alignZero(Math.sqrt(_radius * _radius / vMinusVVaVa.lengthSquared()));
-            return t == 0 ? null : List.of(new GeoPoint(this,ray.getPoint(t)));
+            return t == 0 ? null : List.of( new GeoPoint(this, ray.getPoint(t)));
         }
 
         double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
@@ -120,12 +122,12 @@ public class Tube extends Geometry {
         if (dPVAxis == 0)
             dPMinusdPVaVa = deltaP;
         else {
-            dPVaVa = vAxis.scale(dPVAxis);
             try {
+            dPVaVa = vAxis.scale(dPVAxis);
                 dPMinusdPVaVa = deltaP.subtract(dPVaVa);
             } catch (IllegalArgumentException e1) {
                 double t = alignZero(Math.sqrt(_radius * _radius / a));
-                return t == 0 ? null : List.of(new GeoPoint(this,ray.getPoint(t)));
+                return t == 0 ? null : List.of((new GeoPoint(this,ray.getPoint(t))));
             }
         }
 
@@ -150,9 +152,9 @@ public class Tube extends Geometry {
 
         // if both t1 and t2 are positive
         if (t2 > 0)
-            return List.of(new GeoPoint(this,ray.getPoint(t1)) ,new GeoPoint(this, ray.getPoint(t2)));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)), (new GeoPoint(this,ray.getPoint(t2))));
         else // t2 is behind the head
-            return List.of(new GeoPoint (this,ray.getPoint(t1)));
+            return List.of((new GeoPoint(this,ray.getPoint(t1))));
 
 //        return null;
     }

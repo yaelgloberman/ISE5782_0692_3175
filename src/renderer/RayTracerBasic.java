@@ -47,6 +47,38 @@ public class RayTracerBasic extends RayTracer {
         return calcColor(closestPoint, ray);
     }
 
+    public Color traceRay(List<Ray> rays)
+    {
+        Color finalColor=null;
+        Color firstColor=null;
+        Color colorTmp=new Color(0,0,0);
+        for(var ray:rays)
+        {
+            List<GeoPoint> intersection = scene.getGeometries().findGeoIntersections(ray);
+            if (intersection == null)
+            {
+                return scene.getBackground();
+            }
+            GeoPoint closestPoint = ray.findClosestGeoPoint(intersection);
+
+            colorTmp=calcColor(closestPoint, ray) == null ? scene.getBackground() : calcColor(closestPoint, ray);
+            if(finalColor==null)
+            {
+                firstColor=colorTmp;
+                finalColor=new Color(0,0,0);
+                for (int i = 0; i < 10; i++)
+                    finalColor=finalColor.add(colorTmp);
+            }
+
+            if(!colorTmp.equals(firstColor))
+                finalColor=finalColor.add(colorTmp);
+
+        }
+        if(finalColor.equals(firstColor))
+            return firstColor;
+        int size=rays.size()+10;
+        return finalColor.reduce(size);
+    }
 
     /**
      * build reflected ray
@@ -212,4 +244,6 @@ public class RayTracerBasic extends RayTracer {
         }
         return ktr;
     }
+
+
 }

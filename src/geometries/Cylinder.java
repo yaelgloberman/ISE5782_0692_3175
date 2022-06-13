@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -57,5 +58,21 @@ public class Cylinder extends Tube{
 
         o = o.add(v.scale(t));
         return point.subtract(o).normalize();
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> res = new ArrayList<>();
+        List<GeoPoint> lst = super.findGeoIntersectionsHelper(ray, maxDistance);
+        if (lst != null)
+            for (GeoPoint geoPoint : lst) {
+                double distance = alignZero(geoPoint.point.subtract(_axisRay.getP0()).dotProduct(_axisRay.getDirection()));
+                if (distance > 0 && distance <= _height)
+                    res.add(geoPoint);
+            }
+
+        if (res.size() == 0)
+            return null;
+        return res;
     }
 }

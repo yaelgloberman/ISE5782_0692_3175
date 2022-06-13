@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
 
+import java.util.List;
+
 /**
  * class used to trace for the rendering engine
  */
@@ -22,4 +24,6 @@ public abstract class RayTracer {
     }
 
    public abstract Color traceRay(Ray ray);
+
+    public abstract Color traceRay(List<Ray> ray);
 }
