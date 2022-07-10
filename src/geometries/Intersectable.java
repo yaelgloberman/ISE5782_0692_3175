@@ -10,11 +10,19 @@ import java.util.Objects;
  * common interface for all graphic objects that intersect with a ray{@link Ray}
  */
 public abstract class Intersectable {
-
+    /**
+     * internal class for certain geometry
+     */
     public class GeoPoint{
 
         public Geometry geometry;
-        public Point point;
+        public Point point; //the intersectable point
+
+        /**
+         * constructor
+         * @param geometry
+         * @param point
+         */
         public GeoPoint(Geometry geometry,Point point){
             this.geometry=geometry;
             this.point=point;
@@ -43,6 +51,12 @@ public abstract class Intersectable {
             return Objects.hash(geometry, point);
         }
     }
+
+    /**
+     *
+     * @param ray
+     * @return the list of all intersections points
+     */
     public final List<Point> findIntersections(Ray ray){
         List<GeoPoint> geoPointList=findGeoIntersections(ray);
         return geoPointList==null?null

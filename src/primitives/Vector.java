@@ -97,6 +97,7 @@ public class Vector extends Point {
      * @return new Vector (u+v)
      */
     public Vector add(Vector other) {
+
         return new Vector(this.xyz.add(other.xyz));
     }
     /**

@@ -6,12 +6,14 @@ import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
 
 /**
  * class rayTracerBasic that extends from rayTracer
+ * thanks to Shaili and Rivki about there help with this class
  */
 public class RayTracerBasic extends RayTracer {
     private GeoPoint closestPoint;
@@ -47,6 +49,12 @@ public class RayTracerBasic extends RayTracer {
         return calcColor(closestPoint, ray);
     }
 
+    /**
+     * calculate the color of the pixel
+     * @param rays list of rays
+     *  MP8
+     * @return the color
+     */
     public Color traceRay(List<Ray> rays)
     {
         Color finalColor=null;
@@ -109,7 +117,14 @@ public class RayTracerBasic extends RayTracer {
     private Ray constructRefractedRay(Point p, Vector v, Vector n) {
         return new Ray(p, n, v);
     }
-
+    /**
+     * calculate the local effects of the scene
+     *
+     * @param gp geo point intersection with the ray
+     * @param ray
+     * @param k   max level of color
+     * @return the color of the local effect
+     */
     private Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
         Color color = gp.geometry.getEmission();
         Vector v = ray.getDirection();
@@ -134,28 +149,36 @@ public class RayTracerBasic extends RayTracer {
         return color;
     }
 
+    /**
+     * calc the diffusive
+     * @param material
+     * @param nl
+     * @return
+     */
     private Double3 calcDiffusive(Material material, double nl) {
         return material.KD.scale(Math.abs(nl));
     }
 
+    /**
+     * calc the specular
+     * @param material
+     * @param n
+     * @param l
+     * @param nl
+     * @param v
+     * @return
+     */
     private Double3 calcSpecular(Material material, Vector n, Vector l, double nl, Vector v) {
         Vector r = l.subtract(n.scale(l.dotProduct(n) * 2)).normalize();
         return material.KS.scale(Math.pow(Math.max(0, r.dotProduct(v.scale(-1d))), material.nShininess));
 
     }
 
-    private boolean unshaded(GeoPoint gp, LightSource lightsource, Vector l, Vector n, double nl, double nv) {
-        Point point = gp.point;
-        Vector lightDirection = l.scale(-1); //from point to light source
-        //Vector epsVector=n.scale(nv<0? DELTA:-DELTA);
-        //Point pointRay=point.add(epsVector);
-        Ray lightRay = new Ray(point, n, lightDirection);
-        double maxDistance = lightsource.getDistance(point);
-        List<GeoPoint> intersections = scene.getGeometries().findGeoIntersections(lightRay, maxDistance);
-
-        return intersections == null;
-    }
-
+    /**
+     * find the closest intersection point with the ray
+     * @param ray
+     * @return the closest point
+     */
     private GeoPoint findClosestIntersection(Ray ray) {
         List<GeoPoint> intersections = scene.getGeometries().findGeoIntersections(ray);
         if (intersections == null || intersections.size() == 0) {
@@ -165,15 +188,39 @@ public class RayTracerBasic extends RayTracer {
         }
     }
 
+    /**
+     * calculate the color
+     * @param gp the geometry
+     * @param ray from the camera
+     * @return
+     */
     private Color calcColor(GeoPoint gp, Ray ray) {
         return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, new Double3(1.0)).add(scene.getAmbientLight().getIntensity());
     }
-
+    /**
+     * calculate the color of the scene
+     *
+     * @param intersection geo point intersections with the ray
+     * @param ray
+     * @param level        of the recursion
+     * @param k            factor of the max value of the level
+     * @return color of the geometry
+     */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, Double3 k) {
         Color color = calcLocalEffects(intersection, ray, k);
         return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray.getDirection(), level, k));
     }
-
+    /**
+     * Calculates the reflection and the refraction
+     * at a given intersection point.
+     *
+     * @param gp    the intersection point
+     * @param level the number of the recursive calls
+     *              to calculate the next reflections and
+     *              refractions
+     * @param k     the effect's strength by the reflection and refraction
+     * @return the color on the intersection point
+     */
     private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, Double3 k) {
         Color color = Color.BLACK;
         Vector n = gp.geometry.getNormal(gp.point);
@@ -192,10 +239,10 @@ public class RayTracerBasic extends RayTracer {
      * calc the global effects- reflection and refraction.
      * this func call "calcColor" in recursion to add more and more global effects.
      *
-     * @param ray   is the ray from the viewer
+     * @param ray    the ray from the viewer
      * @param level of recursion- goes down each time till it gets to 1
-     * @param kx    is kR or kT factor
-     * @param kkx   is kR or kT factor multiplied by k - factor of reflection and refraction
+     * @param kx     kR or kT factor
+     * @param kkx    kR or kT factor multiplied by k - factor of reflection and refraction
      * @return the color of the effect
      */
     private Color calcGlobalEffect(Ray ray, int level, Double3 kx, Double3 kkx) {
@@ -243,6 +290,73 @@ public class RayTracerBasic extends RayTracer {
             }
         }
         return ktr;
+    }
+
+
+    /**
+     * Checks the color of the pixel with the help of individual rays and averages between
+     * them and only if necessary continues to send beams of rays in recursion
+     * @param centerP center pixl
+     * @param Width Length
+     * @param Height width
+     * @param minWidth min Width
+     * @param minHeight min Height
+     * @param cameraLoc Camera location
+     * @param Vright Vector right
+     * @param Vup vector up
+     * @param prePoints pre Points
+     * @return Pixel color
+     * thanks to Rivki
+     */
+    @Override
+    public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc, Vector Vright, Vector Vup, List<Point> prePoints) {
+        if (Width < minWidth * 2 || Height < minHeight * 2) {
+            return this.traceRay(new Ray(cameraLoc, centerP.subtract(cameraLoc))) ;
+        }
+
+        List<Point> nextCenterPList = new LinkedList<>();
+        List<Point> cornersList = new LinkedList<>();
+        List<primitives.Color> colorList = new LinkedList<>();
+        Point tempCorner;
+        Ray tempRay;
+        for (int i = -1; i <= 1; i += 2){
+            for (int j = -1; j <= 1; j += 2) {
+                tempCorner = centerP.add(Vright.scale(i * Width / 2)).add(Vup.scale(j * Height / 2));
+                cornersList.add(tempCorner);
+                if (prePoints == null || !isInList(prePoints, tempCorner)) {
+                    tempRay = new Ray(cameraLoc, tempCorner.subtract(cameraLoc));
+                    nextCenterPList.add(centerP.add(Vright.scale(i * Width / 4)).add(Vup.scale(j * Height / 4)));
+                    colorList.add(traceRay(tempRay));
+                }
+            }
+        }
+
+
+        if (nextCenterPList == null || nextCenterPList.size() == 0) {
+            return primitives.Color.BLACK;
+        }
+
+        Color tempColor = primitives.Color.BLACK;
+        for (Point center : nextCenterPList) {
+            tempColor = tempColor.add(AdaptiveSuperSamplingRec(center, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup, cornersList));
+        }
+        return tempColor.reduce(nextCenterPList.size());
+
+
+    }
+
+    /**
+     * Find a point in the list
+     * @param pointsList the list
+     * @param point the point that we look for
+     * @return true if the point in the list
+     */
+    private boolean isInList(List<Point> pointsList, Point point) {
+        for (Point tempPoint : pointsList) {
+            if(point.equals(tempPoint))
+                return true;
+        }
+        return false;
     }
 
 

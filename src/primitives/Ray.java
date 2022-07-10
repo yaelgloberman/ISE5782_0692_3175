@@ -27,6 +27,12 @@ public class Ray {
         this.dir = dir.normalize();//Normalizes the direction vector
     }
 
+    /**
+     * constructor to initialize the ray
+     * @param p0 the point
+     * @param n vector
+     * @param dir the direction
+     */
     public Ray(Point p0, Vector n, Vector dir) {
         this.dir = dir.normalize();
         double nv = alignZero(n.dotProduct(this.dir));
@@ -38,10 +44,18 @@ public class Ray {
 
     }
 
+    /**
+     * getter
+     * @return the point
+     */
     public Point getP0() {
         return p0;
     }
 
+    /**
+     * getter
+     * @return the direction
+     */
     public Vector getDirection() {
         return new Vector(dir.xyz);
     }
@@ -74,7 +88,11 @@ public class Ray {
                 ;
     }
 
-
+    /**
+     * The function find the closest points to P0 of the ray
+     * @param pointList
+     * @return Point the closes point
+     */
     public Point findClosestPoint(List<Point> pointList) {
         double minDistance = Double.MAX_VALUE;
         double pointDistance;
@@ -93,7 +111,11 @@ public class Ray {
         }
         return closestPoint;
     }
-
+    /**
+    * The function find the closest points to P0 of the ray
+    * @param pointList
+    * @return Point3D the closes point
+    */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> pointList) {
         double minDistance = Double.MAX_VALUE;
         double geoPointDistance;

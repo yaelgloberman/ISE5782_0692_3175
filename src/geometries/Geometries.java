@@ -11,10 +11,6 @@ import java.util.List;
  */
 public class Geometries extends Intersectable{
     List<Intersectable> _intersectableList;
-    /**
-     * constructor
-     * @param emission
-     */
 
     /**
      * constructor
@@ -33,6 +29,12 @@ public class Geometries extends Intersectable{
         Collections.addAll(_intersectableList,intersectables);
     }
 
+    /**
+     *
+     * @param ray
+     * @param maxDistance
+     * @return the intersectables list
+     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<GeoPoint> result=null;

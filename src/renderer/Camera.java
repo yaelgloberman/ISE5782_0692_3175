@@ -9,6 +9,7 @@ import java.util.MissingResourceException;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
+
 /**
  * Camera producing rays through a view plane
  */
@@ -26,6 +27,12 @@ public class Camera {
 
     private ImageWriter imageWriter = null;
     private RayTracer rayTracer = null;
+
+    private int threadsCount = 1; //number of threads
+    private int antiAliasing=1; //number of rays to the superSampling
+    private boolean adaptive = false; //if we want the adaptive or not
+
+
 
     private Point centerPoint=new Point(0,0,200);
 
@@ -66,6 +73,36 @@ public class Camera {
     public Camera setVPSize(double width, double height) {
         this.width = width;
         this.height = height;
+        return this;
+    }
+
+    /**
+     * set the threadsCount
+     *
+     * @return the Camera object
+     */
+    public Camera setMultiThreading(int threadsCount) {
+        this.threadsCount = threadsCount;
+        return this;
+    }
+
+
+    /**
+     * set the number of anti Aliasing rays
+     *
+     * @return the Camera object
+     */
+    public Camera setantiAliasing(int antiAliasing) {
+        this.antiAliasing = antiAliasing;
+        return this;
+    }
+    /**
+     * set the adaptive
+     *
+     * @return the Camera object
+     */
+    public Camera setadaptive(boolean adaptive) {
+        this.adaptive = adaptive;
         return this;
     }
 
@@ -118,7 +155,7 @@ public class Camera {
 
     /**
      * setter
-     * @param rayTracer
+     * @param rayTracer {@link RayTracer}
      * @return this camera
      */
     public Camera setRayTracer(RayTracer rayTracer) {
@@ -154,75 +191,99 @@ public class Camera {
     /**
      * color every pixel and then we see the whole image
      */
-    public void renderImage() {
-        try {
-            if (imageWriter == null) {
-                throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
-            }
-            if (rayTracer == null) {
-                throw new MissingResourceException("missing resource", RayTracer.class.getName(), "");
-            }
-
-            //rendering the image
-            int nX = imageWriter.getNx();
-            int nY = imageWriter.getNy();
-
-            //foreach pixel (i,j)
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                   List<Ray>  ray=constructRays(nX, nY, j, i);// ray from the camera to the pixel
-                    Color pixelColor = rayTracer.traceRay(ray); //get the color of the pixel
-                    imageWriter.writePixel(j, i, pixelColor); //color the pixel
-                }
-            }
-        } catch (MissingResourceException e) {
-            throw new UnsupportedOperationException("Not implemented yet" + e.getClassName());
-        }
-    }
+//    public void renderImage() {
+//        try {
+//            if (imageWriter == null) {
+//                throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
+//            }
+//            if (rayTracer == null) {
+//                throw new MissingResourceException("missing resource", RayTracer.class.getName(), "");
+//            }
+//
+//            //rendering the image
+//            int nX = imageWriter.getNx();
+//            int nY = imageWriter.getNy();
+//
+//            //foreach pixel (i,j)
+//            for (int i = 0; i < nY; i++) {
+//                for (int j = 0; j < nX; j++) {
+//                   List<Ray>  ray=constructRays(nX, nY, j, i);// ray from the camera to the pixel
+//                    Color pixelColor = rayTracer.traceRay(ray); //get the color of the pixel
+//                    imageWriter.writePixel(j, i, pixelColor); //color the pixel
+//                }
+//            }
+//        } catch (MissingResourceException e) {
+//            throw new UnsupportedOperationException("Not implemented yet" + e.getClassName());
+//        }
+//    }
 
     /**
-     *
-     * @param Nx
-     * @param Ny
-     * @param j
-     * @param i
-     * @return
-     * improving the jagged edges - mini project 1
+     * color every pixel and then we see the whole picture
+     * @return the camera object
      */
-    public List<Ray> constructRays(int Nx,int Ny, int j, int i){
-        //Image center
-        Point Pc = p0.add(vTo.scale(distance));
-
-        //Ratio (pixel width & height)
-        double Ry =height/ Ny;
-        double Rx = width/Nx;
-
-        //delta values for going to Pixel[i,j] from Pc
-        double yI = -(i - (Ny -1)/2)* Ry;
-        double xJ = (j - (Nx -1)/2)* Rx;
-
-        if (! isZero(xJ) ) {
-            Pc = Pc.add(vRight.scale(xJ));
+    public Camera renderImage() {
+        if (p0 == null || vRight == null
+                || vUp == null || vTo == null || distance == 0
+                || width == 0 || height == 0 || centerPoint == null
+                || imageWriter == null || rayTracer == null) {
+            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
         }
+        Pixel.initialize(imageWriter.getNy(), imageWriter.getNx(), 1);
 
-        if (! isZero(yI)) {
-            Pc = Pc.add(vUp.scale(yI));
-        }
 
-        List<Ray> rays= new LinkedList<>();
-
-         //puts the pixel center in the first place on the list.
-        rays.add(new Ray(p0,Pc.subtract(p0)));
-
-        // creating Ry*Rx rays for each pixel.
-        Point newPoint=new Point(Pc.getX()- Rx/2,Pc.getY()+Rx/2,Pc.getZ());
-        for (double t = newPoint.getY(); t >newPoint.getY()-Ry; t-=0.01) {
-            for (double k = newPoint.getX(); k< newPoint.getX()+Rx; k+=0.01) {
-                rays.add(new Ray(p0,new Point(k,t,Pc.getZ()).subtract(p0)));
+        if (!adaptive) {
+            while (threadsCount-- > 0) {
+                new Thread(() -> {
+                    for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                        imageWriter.writePixel(pixel.col, pixel.row, rayTracer.traceRay(constructRays(imageWriter.getNx(), imageWriter.getNy(), pixel.col, pixel.row, antiAliasing)));
+                }).start();
             }
+            Pixel.waitToFinish();
+        } else {
+            while (threadsCount-- > 0) {
+                new Thread(() -> {
+                    for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                        imageWriter.writePixel(pixel.col, pixel.row, AdaptiveSuperSampling(imageWriter.getNx(), imageWriter.getNy(), pixel.col, pixel.row, antiAliasing));
+                }).start();
+            }
+            Pixel.waitToFinish();
         }
-        return rays;
+        return this;
     }
+
+
+    /**
+     * Checks the color of the pixel with the help of individual rays and averages between them and only
+     * if necessary continues to send beams of rays in recursion
+     * @param nX Pixel length
+     * @param nY Pixel width
+     * @param j The position of the pixel relative to the y-axis
+     * @param i The position of the pixel relative to the x-axis
+     * @param numOfRays The amount of rays sent
+     * @return Pixel color
+     * improving MP 9
+     * thanks to Rivki
+     */
+    private Color AdaptiveSuperSampling(int nX, int nY, int j, int i,  int numOfRays)  {
+        Vector Vright = vRight;
+        Vector Vup = vUp;
+        Point cameraLoc = this.p0;
+        int numOfRaysInRowCol = (int)Math.floor(Math.sqrt(numOfRays));
+        if(numOfRaysInRowCol == 1)  return rayTracer.traceRay(constructRayThroughPixel(nX, nY, j, i));
+
+        Point pIJ = getCenterOfPixel(nX, nY, j, i);
+
+        double rY = alignZero(height / nY);
+        // the ratio Rx = w/Nx, the width of the pixel
+        double rX = alignZero(width / nX);
+
+
+        double PRy = rY/numOfRaysInRowCol;
+        double PRx = rX/numOfRaysInRowCol;
+        return rayTracer.AdaptiveSuperSamplingRec(pIJ, rX, rY, PRx, PRy,cameraLoc,Vright, Vup,null);
+    }
+
+
     /**
      * construct ray through a pixel in the view plane
      * nX and nY create the resolution
@@ -267,12 +328,14 @@ public class Camera {
 
     /**
      * Creates a beam of rays into a square grid
+     * thanks to Noam Shauli
      * @param nX Pixel length
      * @param nY Pixel width
      * @param j Position the pixel on the y-axis inside the grid
      * @param i Position the pixel on the x-axis inside the grid
      * @param numOfRays The root of the number of beams sent per pixel
      * @return List of beams of rays
+     * MP 8
      */
 
     public List<Ray> constructRays(int nX, int nY, int j, int i, int numOfRays) {
@@ -300,12 +363,8 @@ public class Camera {
                 }
             }
 
-
             return rays;
         }
-
-
-
     }
 }
 

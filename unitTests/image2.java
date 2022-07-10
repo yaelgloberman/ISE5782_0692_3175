@@ -18,7 +18,7 @@ public class image2 {
 
         //Scene scene = new Scene.SceneBuilder("Test scene").build();//
         Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0,0,-1), new Vector(1,0,0)) //
-                .setVPDistance(600).setVPSize(200, 200); //
+                .setVPDistance(600).setVPSize(250, 250); //
 
         Point S1=new Point(-165,170,-500);
         Point S2=new Point(-165,-150,-500);
@@ -88,37 +88,33 @@ public class image2 {
                 .setMaterial(new Material().setKD(0.5).setKS(0.4).setKT(0.1).setKR(0).setNShininess(20)),
                new Polygon(S2,S1,be1,be2).setEmission(new Color(10,100,255)) //background
                        .setMaterial(new Material().setKD(0.5).setKS(0.8).setKR(0).setNShininess(20)),
-//              new Polygon(h1,h2,h4,h3).setEmission(new Color(GRAY)) //חזית הבית
-//                .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-//               new Polygon(h2,h24,h56,h5).setEmission(new Color(GRAY)) //דופו ימנית
-//                       .setMaterial(new Material().setKD(0.95).setKS(0).setKT(0).setKR(0).setNShininess(20)),
-               new Polygon(h1,h3,h8,h7).setEmission(new Color(GRAY)) //דופו שמאלית
+               new Polygon(h1,h3,h8,h7).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKT(0).setKR(0).setNShininess(20)),
-               new Polygon(h5,h6,h8,h7).setEmission(new Color(GRAY)) //חזית אחורית
+               new Polygon(h5,h6,h8,h7).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKT(0).setKR(0).setNShininess(20)),
-               new Polygon(h6,h4,h3,h8).setEmission(new Color(GRAY)) //תקרה
+               new Polygon(h6,h4,h3,h8).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0).setKS(0).setKT(0).setKR(0).setNShininess(0)),
-               new Triangle(h4,h9,h3).setEmission(new Color(RED)) //גג
+               new Triangle(h4,h9,h3).setEmission(new Color(RED)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Triangle(h6,h10,h8).setEmission(new Color(RED)) //גג
+               new Triangle(h6,h10,h8).setEmission(new Color(RED)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
                new Polygon(h4,h9,h10,h6).setEmission(new Color(RED)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
                new Polygon(h10,h9,h3,h8).setEmission(new Color(RED)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-        new Polygon(h2,h4,d5,d2).setEmission(new Color(GRAY)) //חזית הבית
+        new Polygon(h2,h4,d5,d2).setEmission(new Color(GRAY)) //
                 .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(h1,h3,d6,d1).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(h1,h3,d6,d1).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(h4,h24,h13,h3).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(h4,h24,h13,h3).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(h2,h4,c,e).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(h2,h4,c,e).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(f,d,h6,h5).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(f,d,h6,h5).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(h2,h24,h56,h5).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(h2,h24,h56,h5).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(g,h4,h6,h).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(g,h4,h6,h).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
                 new Sphere(l1,5).setEmission(new Color(YELLOW))
                         .setMaterial(new Material().setKD(0.5).setKS(0.4).setKT(0.1).setKR(0.2).setNShininess(20)),
@@ -143,15 +139,15 @@ public class image2 {
                 new Cylinder(new Ray(l1,new Vector(30,0,0)),2,30)
                         .setEmission(new Color(BLACK)) //
                         .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(A1,A3,A5,A4).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(A1,A3,A5,A4).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(A1,A4,A7,h3).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(A1,A4,A7,h3).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(h3,A7,A6,A2).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(h3,A7,A6,A2).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(A2,A6,A5,A3).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(A2,A6,A5,A3).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
-               new Polygon(A4,A5,A6,A7).setEmission(new Color(GRAY)) //חזית הבית
+               new Polygon(A4,A5,A6,A7).setEmission(new Color(GRAY)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20)),
                new Sphere(new Point(50,57.5,-226.25),12.5) .setEmission(new Color(BLACK)) //
                 .setMaterial(new Material().setKD(0.05).setKS(0).setKR(0).setKT(0.85).setNShininess(20)),
@@ -159,7 +155,7 @@ public class image2 {
                        .setMaterial(new Material().setKD(0).setKS(0).setKR(0).setKT(0.96).setNShininess(20)),
                new Sphere(new Point(110,57.5,-226.25),12.5) .setEmission(new Color(BLACK)) //
                        .setMaterial(new Material().setKD(0).setKS(0).setKR(0).setKT(0.98).setNShininess(20)),
-               new Polygon(w1,w2,w4,w3).setEmission(new Color(BLACK)) //חזית הבית
+               new Polygon(w1,w2,w4,w3).setEmission(new Color(BLACK)) //
                        .setMaterial(new Material().setKD(0).setKS(0).setKR(0).setKT(0.96).setNShininess(20)),
                 new Cylinder(new Ray(R3,new Vector(95,20,-20)),2,99.12113801)
                         .setEmission(new Color(102,0,153)) //
@@ -173,20 +169,9 @@ public class image2 {
                new Cylinder(new Ray(R6,new Vector(20,20,-60)),4,66.33249581)
                        .setEmission(new Color(102,0,153)) //
                        .setMaterial(new Material().setKD(0.95).setKS(0).setKR(0).setKT(0).setNShininess(20))
-
-
-//               new Polygon(S3,be3,be2,S2).setEmission(new Color(BLACK)) //
-//                       .setMaterial(new Material().setKD(0.5).setKS(0.8).setKR(0).setNShininess(20)),
-//               new Polygon(S4,be4,be1,S1).setEmission(new Color(BLACK)) //
-//                       .setMaterial(new Material().setKD(0.5).setKS(0.8).setKR(0).setNShininess(20))
-//               new Polygon(be1,be2,be3,be4).setEmission(new Color(10,100,255)) //background
-//                       .setMaterial(new Material().setKD(0.5).setKS(0.8).setKR(0).setNShininess(20))
        );
 
-//        scene.lights.add(
-//                new PointLight(new Color(255,255,153), new Point(90, 150, -300)) //
-//                        .setKL(0.00001).setKQ(0.000005)
-//        );
+
 
         scene.lights.add(
                 new SpotLight(new Color(400, 240, 0), light, new Vector(-280,65,-300)) //
@@ -197,11 +182,14 @@ public class image2 {
                         .setKL(1E-5).setKQ(1.5E-7));
 
 
-
-        camera.setImageWriter(new ImageWriter("ourPicture2", 1000, 1000)) //
-                .setRayTracer(new RayTracerBasic(scene)) //
-                .renderImage(); //
-        camera.writeToImage();
+        ImageWriter imagewriter=new ImageWriter("house",1000,1000);
+        camera.setMultiThreading(4)
+                .setadaptive(true)
+                .setantiAliasing(20)
+                .setImageWriter(imagewriter)
+                .setRayTracer(new RayTracerBasic(scene))
+                .renderImage()
+                .writeToImage();
 
     }
 

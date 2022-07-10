@@ -27,6 +27,10 @@ public class Cylinder extends Tube{
         this._height = height;
     }
 
+    /**
+     *
+     * @return the height of the cylinder
+     */
     public double getHeight() {
         return _height;
     }
@@ -39,6 +43,11 @@ public class Cylinder extends Tube{
                 ", _radius=" + _radius ;
     }
 
+    /**
+     * calculate the normal by the point
+     * @param point {@link Point} external to the shape
+     * @return the normal of the cylinder
+     */
     @Override
     public Vector getNormal(Point point) {
         Point o = _axisRay.getP0();
@@ -60,6 +69,12 @@ public class Cylinder extends Tube{
         return point.subtract(o).normalize();
     }
 
+    /**
+     *
+     * @param ray
+     * @param maxDistance
+     * @return a list of the intersections
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         List<GeoPoint> res = new ArrayList<>();

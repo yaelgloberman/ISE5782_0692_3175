@@ -9,6 +9,10 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
+/**
+ * class plane
+ *
+ */
 public class Plane extends Geometry implements FlatGeometry {
     final private Point _q0;
     final private Vector _normal;

@@ -9,11 +9,20 @@ import java.util.List;
 
 import static primitives.Util.alignZero;
 
+/**
+ * class sphere
+ *
+ */
 public class Sphere extends Geometry {
 
-    final private Point _center;
-    final private double _radius;
+    final private Point _center; //the center of the sphere
+    final private double _radius; //the radius of the sphere
 
+    /**
+     * constructor to the sphere
+     * @param _center
+     * @param _radius
+     */
     public Sphere(Point _center, double _radius) {
         this._center = _center;
         this._radius = _radius;
@@ -31,11 +40,18 @@ public class Sphere extends Geometry {
         this._radius = _radius;
     }
 
-
+    /**
+     * getter
+     * @return the center of the sphere
+     */
     public Point get_center() {
         return _center;
     }
 
+    /**
+     * getter
+     * @return the radius of the sphere
+     */
     public double get_radius() {
         return _radius;
     }
@@ -47,6 +63,11 @@ public class Sphere extends Geometry {
                 ", _radius=" + _radius;
     }
 
+    /**
+     * calculate for the normal
+     * @param point {@link Point} external to the shape
+     * @return the normal
+     */
     @Override
     public Vector getNormal(Point point) {
         Vector N = point.subtract(_center);

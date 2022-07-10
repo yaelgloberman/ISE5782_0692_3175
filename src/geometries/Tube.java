@@ -77,7 +77,11 @@ public class Tube extends Geometry {
         return n;
     }
 
-
+    /**
+     * the func find the intersections of the ray with the triangle
+     * @param ray ray pointing towards the graphic object
+     * @return list of intersection points
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Vector vAxis = _axisRay.getDirection();
