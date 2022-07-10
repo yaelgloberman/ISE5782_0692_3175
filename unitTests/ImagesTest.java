@@ -1558,10 +1558,11 @@ public class ImagesTest {
         );
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setKQ(0.000001));
 
-        camera.setImageWriter(new ImageWriter("teaPot", 500, 500)) //
+        camera.setImageWriter(new ImageWriter("teaPot", 500, 500))
+                .setMultiThreading(4)//
                 .setRayTracer(new RayTracerBasic(scene)) //
-                .renderImage(); //
-        camera.writeToImage();
+                .renderImage()
+                .writeToImage();
 
 }
 }

@@ -207,7 +207,7 @@ public class Camera {
 //            //foreach pixel (i,j)
 //            for (int i = 0; i < nY; i++) {
 //                for (int j = 0; j < nX; j++) {
-//                   List<Ray>  ray=constructRays(nX, nY, j, i);// ray from the camera to the pixel
+//                   List<Ray>  ray=constructRays(nX, nY, j, i,antiAliasing);// ray from the camera to the pixel
 //                    Color pixelColor = rayTracer.traceRay(ray); //get the color of the pixel
 //                    imageWriter.writePixel(j, i, pixelColor); //color the pixel
 //                }

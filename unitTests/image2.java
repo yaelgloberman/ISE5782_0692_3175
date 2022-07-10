@@ -182,7 +182,7 @@ public class image2 {
                         .setKL(1E-5).setKQ(1.5E-7));
 
 
-        ImageWriter imagewriter=new ImageWriter("house",1000,1000);
+        ImageWriter imagewriter=new ImageWriter("ourPicture2",1000,1000);
         camera.setMultiThreading(4)
                 .setadaptive(true)
                 .setantiAliasing(20)

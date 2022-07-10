@@ -310,33 +310,33 @@ public class RayTracerBasic extends RayTracer {
      */
     @Override
     public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc, Vector Vright, Vector Vup, List<Point> prePoints) {
-        if (Width < minWidth * 2 || Height < minHeight * 2) {
-            return this.traceRay(new Ray(cameraLoc, centerP.subtract(cameraLoc))) ;
-        }
+            if (Width < minWidth * 2 || Height < minHeight * 2) {
+                return this.traceRay(new Ray(cameraLoc, centerP.subtract(cameraLoc))) ;
+            }
 
-        List<Point> nextCenterPList = new LinkedList<>();
-        List<Point> cornersList = new LinkedList<>();
-        List<primitives.Color> colorList = new LinkedList<>();
-        Point tempCorner;
-        Ray tempRay;
-        for (int i = -1; i <= 1; i += 2){
-            for (int j = -1; j <= 1; j += 2) {
-                tempCorner = centerP.add(Vright.scale(i * Width / 2)).add(Vup.scale(j * Height / 2));
-                cornersList.add(tempCorner);
-                if (prePoints == null || !isInList(prePoints, tempCorner)) {
-                    tempRay = new Ray(cameraLoc, tempCorner.subtract(cameraLoc));
-                    nextCenterPList.add(centerP.add(Vright.scale(i * Width / 4)).add(Vup.scale(j * Height / 4)));
-                    colorList.add(traceRay(tempRay));
+            List<Point> nextCenterPList = new LinkedList<>();
+            List<Point> cornersList = new LinkedList<>();
+            List<Color> colorList = new LinkedList<>();
+            Point tempCorner;
+            Ray tempRay;
+            for (int i = -1; i <= 1; i += 2){
+                for (int j = -1; j <= 1; j += 2) {
+                    tempCorner = centerP.add(Vright.scale(i * Width / 2)).add(Vup.scale(j * Height / 2));
+                    cornersList.add(tempCorner);
+                    if (prePoints == null || !isInList(prePoints, tempCorner)) {
+                        tempRay = new Ray(cameraLoc, tempCorner.subtract(cameraLoc));
+                        nextCenterPList.add(centerP.add(Vright.scale(i * Width / 4)).add(Vup.scale(j * Height / 4)));
+                        colorList.add(traceRay(tempRay));
+                    }
                 }
             }
-        }
 
 
-        if (nextCenterPList == null || nextCenterPList.size() == 0) {
-            return primitives.Color.BLACK;
-        }
+            if (nextCenterPList == null || nextCenterPList.size() == 0) {
+                return Color.BLACK;
+            }
 
-        Color tempColor = primitives.Color.BLACK;
+            Color tempColor = Color.BLACK;
         for (Point center : nextCenterPList) {
             tempColor = tempColor.add(AdaptiveSuperSamplingRec(center, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup, cornersList));
         }

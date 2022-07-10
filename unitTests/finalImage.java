@@ -140,9 +140,6 @@ public class finalImage {
                 new Triangle(new Point(-105,200,700),new Point(-105,5,700),new Point(-105,5,-2500))
                         .setEmission(new Color(102,0,153))
                         .setMaterial(new Material().setKD(0.5).setKS(0.5).setKT(0.1).setKR(0.1).setNShininess(20)),
-//                new Triangle(new Point(-105,-200,700),new Point(-105,-5,700),new Point(-105,-5,-2500))
-//                        .setEmission(new Color(95,22,95))
-//                        .setMaterial(new Material().setKD(0.5).setKS(0.5).setKT(0.1).setKR(0.1).setNShininess(20)),
                 new Plane(new Point(-1000,28,0),new Point(90,5,0),new Point(-105,33,-2034))
                         .setEmission(new Color(GRAY))
                         .setMaterial(new Material().setKD(0.5).setKS(0.5).setKR(0.25))
@@ -158,10 +155,14 @@ public class finalImage {
                 new SpotLight(new Color(255,204,0), new Point(90,150,-300), new Vector(15, 12, -19)) //
                         .setKL(0.00001).setKQ(0.000005)
         );
-        camera.setImageWriter(new ImageWriter("ourPicture", 1000, 1000)) //
-                .setRayTracer(new RayTracerBasic(scene)) //
-                .renderImage(); //
-        camera.writeToImage();
+        ImageWriter imagewriter=new ImageWriter("ourPicture",500,500);
+        camera.setMultiThreading(4)
+                .setadaptive(true)
+                .setantiAliasing(10)
+                .setImageWriter(imagewriter)
+                .setRayTracer(new RayTracerBasic(scene))
+                .renderImage()
+                .writeToImage();
 
 
 
