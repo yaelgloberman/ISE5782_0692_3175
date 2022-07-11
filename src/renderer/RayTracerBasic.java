@@ -28,6 +28,7 @@ public class RayTracerBasic extends RayTracer {
      * @param scene to be intersected
      */
     public RayTracerBasic(Scene scene) {
+
         super(scene);
     }
 
@@ -115,6 +116,7 @@ public class RayTracerBasic extends RayTracer {
      * @return
      */
     private Ray constructRefractedRay(Point p, Vector v, Vector n) {
+
         return new Ray(p, n, v);
     }
     /**
@@ -156,6 +158,7 @@ public class RayTracerBasic extends RayTracer {
      * @return
      */
     private Double3 calcDiffusive(Material material, double nl) {
+
         return material.KD.scale(Math.abs(nl));
     }
 
@@ -198,7 +201,7 @@ public class RayTracerBasic extends RayTracer {
         return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, new Double3(1.0)).add(scene.getAmbientLight().getIntensity());
     }
     /**
-     * calculate the color of the scene
+     * calculate the color
      *
      * @param intersection geo point intersections with the ray
      * @param ray
@@ -296,7 +299,7 @@ public class RayTracerBasic extends RayTracer {
     /**
      * Checks the color of the pixel with the help of individual rays and averages between
      * them and only if necessary continues to send beams of rays in recursion
-     * @param centerP center pixl
+     * @param centerP center pixel
      * @param Width Length
      * @param Height width
      * @param minWidth min Width
@@ -336,7 +339,16 @@ public class RayTracerBasic extends RayTracer {
                 return Color.BLACK;
             }
 
-            Color tempColor = Color.BLACK;
+        boolean isAllEquals = true;
+        Color tempColor = colorList.get(0);
+        for (Color color : colorList) {
+            if (!tempColor.equals(color))
+                isAllEquals = false;
+        }
+        if (isAllEquals && colorList.size() > 1)
+            return tempColor;
+
+        tempColor = Color.BLACK;
         for (Point center : nextCenterPList) {
             tempColor = tempColor.add(AdaptiveSuperSamplingRec(center, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup, cornersList));
         }

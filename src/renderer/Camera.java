@@ -255,8 +255,8 @@ public class Camera {
     /**
      * Checks the color of the pixel with the help of individual rays and averages between them and only
      * if necessary continues to send beams of rays in recursion
-     * @param nX Pixel length
-     * @param nY Pixel width
+     * @param nX number of pixels in the width of the view plane
+     * @param nY number of pixels in the height of the view plane
      * @param j The position of the pixel relative to the y-axis
      * @param i The position of the pixel relative to the x-axis
      * @param numOfRays The amount of rays sent
@@ -287,12 +287,11 @@ public class Camera {
     /**
      * construct ray through a pixel in the view plane
      * nX and nY create the resolution
-     *
      * @param Nx number of pixels in the width of the view plane
      * @param Ny number of pixels in the height of the view plane
      * @param j  index row in the view plane
      * @param i  index column in the view plane
-     * @return ray that goes through the pixel (j, i)  Ray(p0, Vi,j)
+     * @return ray that goes through the pixel (j, i)  Ray(p0, Vij)
      */
     public  Ray constructRayThroughPixel(int Nx,int Ny, int j, int i){
         Point pij=getCenterOfPixel(Nx,Ny,j,i);   //center point of the pixel
@@ -328,13 +327,13 @@ public class Camera {
 
     /**
      * Creates a beam of rays into a square grid
-     * thanks to Noam Shauli
-     * @param nX Pixel length
-     * @param nY Pixel width
+     * @param nX number of pixels in the width of the view plane
+     * @param nY number of pixels in the height of the view plane
      * @param j Position the pixel on the y-axis inside the grid
      * @param i Position the pixel on the x-axis inside the grid
      * @param numOfRays The root of the number of beams sent per pixel
      * @return List of beams of rays
+     * thanks to Rivki
      * MP 8
      */
 
